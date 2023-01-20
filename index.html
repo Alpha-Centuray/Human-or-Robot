@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human or Robot</title>
+    <style>
+        .img1 {
+        content: url("https://picsum.photos/id/237/200/300");
+        }
+
+        .img2 {
+        content: url("https://picsum.photos/seed/picsum/200/300");
+        }
+
+        .img3 {
+        content: url("https://picsum.photos/200/300?grayscale");
+        }
+        .img4 {
+        content: url("https://picsum.photos/200/300/");
+        }
+        .img5 {
+        content: url("https://picsum.photos/200/300.jpg");
+        }
+
+        img {
+        margin: 10px;
+        border: 5px solid #555;
+        width: 10%;
+        }
+
+        .flex {
+        display: flex;
+        justify-content: center;
+        }
+
+        .selected {
+          border: 5px solid rgb(0, 195, 255);
+        }
+
+        p {
+        text-align: center;
+        }
+
+        button {
+          margin: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+      <img src="" >
+      <img src="" >
+      <img src="" >
+      <img src="" >
+      <img src="" >
+      <img src="" >
+     
+   
+
+      <script>
+          
+          let heading3 = document.createElement("h3") 
+          heading3.setAttribute("id", "h")
+          heading3.innerHTML = "Please click on the identical tiles to verify that you are not a robot."
+          document.body.prepend(heading3)
+
+          // generate random image out of 5
+          let imgArray = ["img1", "img2", "img3", "img4", "img5"]
+            let random_index = parseInt(Math.random()*imgArray.length)   // 3
+            let random_img = imgArray[random_index]  // img3
+            imgArray.push(random_img)  // img1, img2, img3, img4, img5, img3
+
+
+           
+/*
+            let arr = [10,20,30,40,50,60]
+             1. select a index randomly => img (2)
+             2. store that img at arr1[0]
+             3. select another index randomly => img (4)
+             4. store that img at arr1[1]
+
+             // easier: 
+                1. select a index randomly from arr1 (0-5)
+                // 1
+
+            let arr1 = [ , 30, 10, ,20 , ,]
+               
+     
+ */
+
+            // imgArray = ["img1", "img2", "img3", "img4", "img5", "img3"]
+
+            let imageNewArray = []
+
+             let k1 = 0
+            while(k1< imgArray.length){
+                let random_index = parseInt(Math.random()*imgArray.length)  // 2
+
+                if(imageNewArray[random_index] == undefined){
+                    imageNewArray[random_index] = imgArray[k1++]
+                }
+                else if(imageNewArray[random_index] != undefined){
+                    continue
+                }
+            }
+
+
+             // assign class to images: // classList
+             let images = document.querySelectorAll("img")
+            let k = 0
+            for(let t of images){
+                // t.setAttribute("class", imgArray[k++])
+                t.className = imageNewArray[k]
+                t.id = k
+                t.addEventListener("click",robotOrHuman)
+                k++
+            }
+
+
+            let reset = document.createElement("button")
+            reset.innerHTML = "Reset"
+            reset.id = "reset"
+            let verify = document.createElement("button")
+            verify.id = "verify"
+            verify.innerHTML = "Verify"
+            let para = document.createElement("p")
+            para.id = "para"
+
+             let click = 0,  previousSelectionId = ""
+            function robotOrHuman(e){
+                  let selctedImage = e.target
+                  selctedImage.classList.add("selected")
+                  document.body.append(reset)
+                  let currentSelectionId = selctedImage.id
+
+                  if(currentSelectionId != previousSelectionId){
+                      click++
+                      previousSelectionId = currentSelectionId
+
+                      if(click == 2){
+                        document.body.append(verify)
+                      }
+                  }
+                  
+            }
+
+             reset.addEventListener("click", resetGame)
+
+             verify.addEventListener("click", verifyGame)
+
+           
+
+
+
+
+
+
+      </script>
+</body>
+</html>
